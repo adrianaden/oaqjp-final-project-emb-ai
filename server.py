@@ -14,10 +14,14 @@ def emot_detector():
     """
     This code receives the text from the HTML interface and
     runs emotion detection over it using emotion_detector()
-    and returns the output to be displayed.
+    and returns the output to be displayed. A blank or invalid
+    entry returns an error message instead of the scores.
     """
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
+
+    if response['dominant_emotion'] is None:
+        return "Invalid text! Please try again!"
 
     return (
         f"For the given statement, the system response is "
